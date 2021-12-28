@@ -21,15 +21,43 @@ const db = mysql.createConnection(
     console.log('Connected to the election database.')
 );
 
-//to return all the data in the candidates table
-db.query(`SELECT * FROM candidates`, (err, rows) => {
-    console.log(rows);
-  });
+// //to return all the data in the candidates table
+// db.query(`SELECT * FROM candidates`, (err, rows) => {
+//     console.log(rows);
+// });
+
+// // GET a single candidate
+// db.query(`SELECT * FROM candidates WHERE id = 11`, (err, row) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(row);
+// });
+
+// // Delete a candidate
+// db.query(`DELETE FROM candidates WHERE id = ?`, 1, (err, result) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(result);
+// });
+
+// Create a candidate
+const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected) 
+              VALUES (?,?,?,?)`;
+const params = [1, 'Ronald', 'Firbank', 1];
+
+db.query(sql, params, (err, result) => {
+  if (err) {
+    console.log(err);
+  }
+  console.log(result);
+});
 
 // Default response for any other request (Not Found) - this is called catchall route
 app.use((req, res) => {
     res.status(404).end();
-  });
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
